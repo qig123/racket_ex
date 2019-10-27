@@ -41,12 +41,16 @@
   (iter items (list))
   )
 ;逆序
-(define (reserve items)
+(define (reserve2 items)
   (define (iter things answer)
     (if (null? things) answer
         (iter (cdr things) (cons (car things) answer))))
    (iter items nil)
 
   )
+;
+
+
+
 
 
