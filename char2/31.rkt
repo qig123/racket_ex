@@ -12,6 +12,7 @@
   
   (lambda (mf)
     (cond ((eq?  mf 'how-many-calls?) sum)
+          ((eq?  mf 'reset-count?) (set! sum 0 ) )
            (else   (begin (set! sum (+ sum 1) ) (f mf)))
           )
     )
