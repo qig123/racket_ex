@@ -78,7 +78,9 @@
 ;test data ((acc '123456 'withdraw) 40)  ((acc '1234566 'deposit) 40)
 
 (define (make-account3 balance pwd )
+  ;(define call-the-cops (error "more 7 error") )
   (define maxinput 7)
+  (define call 0)
   (define (withdraw amount)
     (if (>= balance amount)
         (begin (set! balance (- balance amount))
@@ -92,8 +94,9 @@
     balance
     )
    (define (dipatch2 p m)
-    (cond ( (eq? p pwd) (dispatch m) )
-          (else "Incorrect password")
+    (cond ( (> call maxinput ) (error "call-the-cops") )
+          ( (eq? p pwd)  (begin (set!  call 0) (dispatch m)) )
+          ( else (begin (set! call (+ call 1))  "Incorrect password"))
           )
     )
   (define (dispatch m )
@@ -105,5 +108,6 @@
     )
    dipatch2
   )
-
+(define acc3 (make-account3 100 '123456))
+;test data ((acc3 '123456 'withdraw) 40)  ((acc3 '1234566 'deposit) 40)
 
