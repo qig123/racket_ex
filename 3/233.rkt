@@ -3,6 +3,7 @@
 ;accumulate + 0 (list 1 2 3 4 5)
 ;(enumerate-interval 2 7)
 ;(accumulate + 0 (list 1 2 3 4 5))
+;(horner-eval 2 (list 1 3 0 5 0 1))
 (define (abs x)
   (cond ((> x 0) x)
         ((= x 0) 0)
@@ -47,6 +48,22 @@
           )
       )
   )
+(define (length2 sequence)
+  (accumulate (lambda (x y) (+ 1 y)) 0 sequence)
+  )
+;用Horner规则求多项式的值
+;this-coeff系数
+(define duo (list 1 3 0 5 0 1))
+(define (horner-eval x confficient-sequence)
+  (accumulate (lambda (this-coeff higher-terms)
+               ; (+ (+ this-coeff (* x  (if (= (length2  confficient-sequence) 1) 0 this-coeff )) )  higher-terms)
+               ; (+  (if (= (length2  confficient-sequence)  higher-terms) this-coeff (* x this-coeff ) )  higher-terms)
+               (+ this-coeff ( * x higher-terms))
+                )           
+              0
+             confficient-sequence)
+  )
+;map映射
 (define (map p items)
   (if (null? items)
       null
@@ -71,8 +88,6 @@
       (+ 1 (length (cdr items)))
       )
   )
-(define (length2 sequence)
-  (accumulate (lambda (x y) (+ 1 y)) 0 sequence)
-  )
+
 
 
