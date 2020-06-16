@@ -40,6 +40,23 @@
       (cons low (enumerate-interval (+ low 1) high))
       )
   )
+(define x (cons (list 1 2) (list 3 4)))
+(define (count-leaves2 x)
+  (cond ((null? x) 0)
+        ((not (pair? x)) 1)
+        (else (+ (count-leaves2 (car x))
+                 (count-leaves2 (cdr x))
+                 ))
+        )
+  )
+;map映射
+(define (map p items)
+  (if (null? items)
+      null
+      (cons (p (car items))
+            (map p (cdr items)))
+      )
+  )
 (define (accumulate op initial sequence)
   (if (null? sequence)
       initial
@@ -48,6 +65,8 @@
           )
       )
   )
+;count-leaves重新定义
+
 (define (length2 sequence)
   (accumulate (lambda (x y) (+ 1 y)) 0 sequence)
   )
@@ -63,14 +82,7 @@
               0
              confficient-sequence)
   )
-;map映射
-(define (map p items)
-  (if (null? items)
-      null
-      (cons (p (car items))
-            (map p (cdr items)))
-      )
-  )
+
 (define (append list1 list2)
   (if (null? list1)
       list2
