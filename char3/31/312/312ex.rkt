@@ -1,34 +1,5 @@
 #lang racket
-(provide monte-carlo )
-(provide rand-update )
-(define random-init 1)
-(define (rand-update x)
-  (+ (* x 2) 3)
-  )
-(define rand
-  (let ((x random-init))
-    (lambda () (begin (set! x (rand-update x)) x) )
-    )
-  )
-(define (estimate-pi trials)
-  (sqrt (/ 6.0 (monte-carlo trials cesaro-test)))
-  )
-(define (cesaro-test)
-  (=  (gcd (rand) (rand)) 1)
-  )
-(define (monte-carlo trials experiment)
-  (define (iter trials-remaining trials-passed)
-    (cond
-      ((= trials-remaining 0) (/ trials-passed trials))
-      ((experiment) (iter (- trials-remaining 1) (+ trials-passed 1)))
-      (else
-       (iter (- trials-remaining 1) trials-passed)
-       )
-      )
-    )
-  (iter trials 0)
-  )
-;-------------------------------
+(require "312demo.rkt")
 ;这里可以再抽象一下,用point
 (define x1 0)
 (define x2 0)
@@ -71,9 +42,56 @@
   )
 ;Ex3.6 Design a new rand procedure
 
+(define (rand )
+  (define current-value 1 )
+  (define (generate)
+    (lambda () (begin (set! current-value (rand-update current-value)) current-value) )
+    )
+  (define reset 
+     (lambda (new)
+       (set!  current-value new)
+       )
+    )
+  
+  (define (dispatch m)
+   (cond
+      ((eq? m 'generate) ((generate)) )
+      ((eq? m 'reset)  reset  )
+      (else
+       (error "Input Error")
+       )
+      ))
+  dispatch
+  )
 
-
-
-
-
-
+(define rand-object1 (rand))
+;(rand-object1 'generate)
+;Test  (rand 'generate)
+(define current-value2 1 )
+(define reset 
+     (lambda (new)
+       (begin (set!  current-value2 new) new)
+       )
+    )
+ (define (generate)
+    (lambda () (begin (set! current-value2 (rand-update current-value2)) current-value2) )
+    )
+(define (rand2 m)
+  (cond
+     ((eq? m 'generate) ((generate)) )
+     ((eq? m 'reset)  reset  )
+     (else
+       (error "Input Error")
+       )
+    )
+  )
+;一个很好的例子, 用let创建新环境,但是新环境里面的state,要再全个方法使用,只能把方法写在内部
+ (define rand3 
+   (let ((x 1)) 
+     (define (dispatch message) 
+       (cond ((eq? message 'generate) 
+               (begin (set! x (rand-update x)) 
+                      x)) 
+             ((eq? message 'reset) 
+               (lambda (new-value) (set! x new-value))))) 
+     dispatch)) 
