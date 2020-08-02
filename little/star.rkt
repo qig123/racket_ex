@@ -2,6 +2,7 @@
 (require "number_cans.rkt")
 (provide equal?)
 (provide atom?)
+(provide rember)
 (define y  '(((tomato sauce)) ((bean) sauce)  (and ((flying)) sauce)   ))
 (define x '((coffee) cup ((tea) cup) (and (hick)) cup))
 (define z '((how much (wood))  could ((a (wood) chuck ))(((chuck)))(if (a) ((wood chuck))) could chuck wood   ))

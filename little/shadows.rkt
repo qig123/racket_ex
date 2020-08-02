@@ -1,6 +1,9 @@
 #lang Racket
 (require "star.rkt")
 (require "number_cans.rkt")
+(provide operator)
+(provide  1st-sub-exp)
+(provide 2st-sub-exp)
 (print-as-expression #f)
 (define numbered?2
   (lambda (aexp)

@@ -1,5 +1,10 @@
 #lang Racket
 (require "star.rkt")
+(provide first)
+(provide second)
+(provide build)
+(provide revpair)
+(provide a-pair?)
 (print-as-expression #f)
 (define A '(apple peaches apple plum))
 (define B '(apple peaches pears plum))
