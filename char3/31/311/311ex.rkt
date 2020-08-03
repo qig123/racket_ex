@@ -67,7 +67,7 @@
   
   (define (dispatch input-password m)
     (cond
-      (( not(eq? input-pas sword password ) )  (begin (counter-error) (if (morethan?)  (error "call-the-cops")   (error "Incorrect password")) ))
+      (( not(eq? input-password password ) )  (begin (counter-error) (if (morethan?)  (error "call-the-cops")   (error "Incorrect password")) ))
       (else
        (begin (set! error-count 0 )
               (cond
