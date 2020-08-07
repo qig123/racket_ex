@@ -1,5 +1,6 @@
 #lang Racket
 (require "number_cans.rkt")
+(provide eqlist?)
 (provide equal?)
 (provide atom?)
 (provide rember)
@@ -136,5 +137,7 @@
       )
     )
   )
+(define s (list 'a 'b 'c))
+(define z1 (cons s s))
 
 
