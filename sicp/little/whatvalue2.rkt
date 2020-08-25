@@ -10,11 +10,15 @@
             ((appetizer entree beverage) (food tastes good))
             ))
 (define B '(((y z) ((8) 9)) ))
+(define T1  '( ((entree dessert)
+(spaghetti spumoni))
+((appetizer entree beverage)
+(food tastes good))) )
 (define lookup-in-entry
   (lambda (name entry entry-f)
     (lookup-in-entry-help name
-                          (first entry1)
-                          (second entry1)
+                          (first entry)
+                          (second entry)
                           entry-f)
     )
   )
@@ -24,11 +28,26 @@
 (define lookup-in-entry-help
   (lambda (name names values entry-f)
     (cond
+      ((null? names) (entry-f 'fail))
       ( ( begin  (print (car names)) (display "\n") (eq? (car names) name)) (car values))
       (else
-       (lookup-in-entry-help name (cdr names) (cdr values) (lambda () 5))
+       (lookup-in-entry-help name (cdr names) (cdr values) entry-f)
        )
       )
     )
   )
+;(lookup-in-entry-help  'entree (first entry1) (second entry1) (lambda (x) x))
 ;(  lookup-in-entry  entry1  'entree entry-f  )
+;(  lookup-in-table 'entree T1   (lambda (x) x) )
+;(lookup-in-entry 'entree (car T1)  (lambda (x) x))
+(define extend-table cons)
+(define lookup-in-table
+  (lambda (name table table-f)
+          (cond
+            ((null? table) (table-f name))
+            (else
+             (lookup-in-entry name (car table) (lambda (name) (lookup-in-table name (cdr table) table-f)))))
+             )
+            )
+          
+  
